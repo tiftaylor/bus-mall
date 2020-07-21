@@ -4,8 +4,9 @@ body {
   flex-direction: column;
 }
 
-body > div:nth-child(2) {
-  width: 500px;
+#chartDiv {
+  width: 600px;
+  outline: solid 1px orange;
 }
 
 h1 {
@@ -13,6 +14,7 @@ h1 {
   font-size: 3rem;
   margin: 30px;
 }
+
 img {
   width: 200px;
   float: left;
@@ -21,11 +23,13 @@ img {
 
 
 #productUL {
-  width: 900px;
+  outline: solid 1px green;
+  /* width: 900px; */
 }
 
 #resultUL {
   clear: both;
   list-style-type: circle;
   margin: 50px;
+  outline: solid 1px purple;
 }
