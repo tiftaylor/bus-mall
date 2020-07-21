@@ -1,0 +1,25 @@
+h1 {
+  font-weight: bold;
+  font-size: 3rem;
+  margin: 30px;
+}
+img {
+  width: 200px;
+  float: left;
+  padding: 20px;
+}
+
+div {
+  width: 960px;
+  height: 350px;
+}
+
+#productUL {
+  width: 800px;
+}
+
+#resultUL {
+  list-style-type: circle;
+  width: 600px;
+  margin: 50px;
+}
