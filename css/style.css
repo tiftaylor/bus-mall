@@ -6,7 +6,11 @@ body {
 
 #chartDiv {
   width: 600px;
-  outline: solid 1px orange;
+  outline: solid 3px orange;
+}
+
+#ulDiv {
+  outline: solid 3px orange;
 }
 
 h1 {
@@ -16,7 +20,8 @@ h1 {
 }
 
 img {
-  width: 200px;
+  width: 300px;
+  height: 300px;
   float: left;
   padding: 20px;
 }
@@ -24,7 +29,7 @@ img {
 
 #productUL {
   outline: solid 1px green;
-  /* width: 900px; */
+  height: 400px;
 }
 
 #resultUL {
