@@ -7,3 +7,4 @@ The assignment has a client wanting to make Bus Mall shopping catalogues but wan
 **Resources:**
 - After a while of googling, I decided to go with [this StackOverflow answer](https://stackoverflow.com/questions/18806210/generating-non-repeating-random-numbers-in-js/18806417#18806417) for what approach to take on making sure my random index didn't duplicate itself when generating new product images
 - To remind myself how to add on bullet points to `li` elements when using a reset CSS file, I used the property and value set fround at [w3schools](https://www.w3schools.com/css/css_list.asp)
+- For the chart we're using documentation from [chartjs](https://www.chartjs.org/docs/latest/)
