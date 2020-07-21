@@ -1,10 +1,10 @@
 'use strict';
 
 // ======= Global Variables ======= //
-var productArray = [];
+Product.productArray = [];
 var productHTMLList = document.getElementById('productUL');
 var totalPageClicks = 0;
-
+var productIndexsCurrentlyOnPage = [];
 
 // ======= Constructor ======= //
 function Product(productName, src) {
@@ -13,32 +13,51 @@ function Product(productName, src) {
   this.productName = productName;
   this.imgSource = src;
 
-  productArray.push(this);
-};
+  Product.productArray.push(this);
+}
 
 
 // ======= Algorithm to randomly generate 3 unique images ======= //
-function generateDisplayProduct() {
+  function generateDisplayProduct() {
   // Fisher Yates Shuffle algorithm, resource on README
-  var i = productArray.length;
+  var i = Product.productArray.length;
   var j = 0;
   var swapIndexValue;
+
   while (i--) {
     j = Math.floor(Math.random() * (i + 1));
-    swapIndexValue = productArray[i];
-    productArray[i] = productArray[j];
-    productArray[j] = swapIndexValue;
+    swapIndexValue = Product.productArray[i];
+    Product.productArray[i] = Product.productArray[j];
+    Product.productArray[j] = swapIndexValue;
   }
 
-  var newProduct1 = productArray[0];
-  var newProduct2 = productArray[1];
-  var newProduct3 = productArray[2];
+  // evaluate if can use item
+  var postToPageArray = [];
+  console.log(productIndexsCurrentlyOnPage);
+  for(var k = 0; k < Product.productArray.length; k++){
+    if (Product.productArray[k] !== productIndexsCurrentlyOnPage[0] && 
+      Product.productArray[k] !== productIndexsCurrentlyOnPage[1] && 
+      Product.productArray[k] !== productIndexsCurrentlyOnPage[2]) {
+        postToPageArray.push(Product.productArray[k]);
+        if (postToPageArray.length === 3) {
+          break;
+        }
+      }
+  }
+  console.log('postToPageArray: ', postToPageArray);
+  // push  to current array to use as comparison for what's on the page
+  productIndexsCurrentlyOnPage = [];
+  productIndexsCurrentlyOnPage.push(postToPageArray[0]);
+  productIndexsCurrentlyOnPage.push(postToPageArray[1]);
+  productIndexsCurrentlyOnPage.push(postToPageArray[2]);
+  
+  console.log('productIndexsCurrentlyOnPage: ', productIndexsCurrentlyOnPage);
 
   productHTMLList.innerHTML = '';
-  newProduct1.renderProductAsHTML();
-  newProduct2.renderProductAsHTML();
-  newProduct3.renderProductAsHTML();
-}
+  postToPageArray[0].renderProductAsHTML();
+  postToPageArray[1].renderProductAsHTML();
+  postToPageArray[2].renderProductAsHTML();
+};
 
 
 // ======= Display & Add Images to HTML productUL ======= // 
@@ -53,7 +72,7 @@ Product.prototype.renderProductAsHTML = function() {
   productHTMLList.appendChild(productLI);
 
   this.numTimesShown++;
-}
+};
 
 
 // ======= Click Event Listener ======= //
@@ -66,35 +85,37 @@ function clickOnProductEvent(event) {
   if (event.target.tagName === 'IMG') {
     totalPageClicks++;
 
-    for (var prodIndex = 0; prodIndex < productArray.length; prodIndex++){
-      if (productArray[prodIndex].imgSource === event.target.getAttribute('src')) {
-        productArray[prodIndex].numClicksOfProduct++;
+    for (var prodIndex = 0; prodIndex < Product.productArray.length; prodIndex++){
+      if (Product.productArray[prodIndex].imgSource === event.target.getAttribute('src')) {
+        Product.productArray[prodIndex].numClicksOfProduct++;
+        console.log('numclicks: ', Product.productArray[prodIndex].numClicksOfProduct);
       }
     }
-  }
-
+  };
+  
   generateDisplayProduct();
 
   if(totalPageClicks === 25){
     productHTMLList.removeEventListener('click', clickOnProductEvent);
     displayResultsToHTML();
+    makeChart();
   }
-}
+};
 
 
-// ======= Display & Add Full productArray to HTML resultsUL ====== //
+// ======= Display & Add Full Product.productArray to HTML resultsUL ====== //
 function displayResultsToHTML () {
   var resultUL = document.getElementById('resultUL');
 
-  for (var i = 0; i < productArray.length; i++) {
+  for (var i = 0; i < Product.productArray.length; i++) {
     var resultLI = document.createElement('li');
     resultLI.innerHTML = 
-      productArray[i].productName + ' had ' 
-      + productArray[i].numClicksOfProduct + ' vote(s) and was shown '
-      +  productArray[i].numTimesShown + ' times'
+      Product.productArray[i].productName + ' had ' 
+      + Product.productArray[i].numClicksOfProduct + ' vote(s) and was shown '
+      +  Product.productArray[i].numTimesShown + ' times'
       resultUL.appendChild(resultLI);
   }
-}
+};
  
 
 // ======== TEST DATA ===== //
@@ -120,3 +141,66 @@ new Product('Bad Watering Can', 'img/water-can.jpg');
 new Product('Sad Wine Glass', 'img/wine-glass.jpg');
 
 generateDisplayProduct();
+
+
+// =============== CHART JS Code ================= //
+
+function makeChart() {
+
+  // product Name label array
+  var productLabelArray = [];
+  for (var i = 0; i < Product.productArray.length; i++) {
+    productLabelArray.push(Product.productArray[i].productName);
+  }
+
+  // data # of times product clicked data array
+  var timesClickedDataArray = [];
+  for (var i = 0; i < Product.productArray.length; i++) {
+    timesClickedDataArray.push(Product.productArray[i].numClicksOfProduct);
+  }
+  
+  var colors = ['rgba(255, 99, 132, 0.8)', 'rgba(54, 162, 235, 0.8)', 'rgba(255, 206, 86, 0.8)', 'rgba(75, 192, 192, 0.8)', 'rgba(153, 102, 255, 0.8)', 'rgba(255, 159, 64, 0.8)'];
+  var repeatColors = [];
+  for (var i = 0; i < timesClickedDataArray.length; i++){
+    repeatColors.push(colors[i % colors.length]);
+  }
+
+  var viewsDataArray = [];
+  for (var i = 0; i < Product.productArray.length; i++) {
+    viewsDataArray.push(Product.productArray[i].numTimesShown);
+  }
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: productLabelArray,
+        datasets: [{
+            label: '# of Votes',
+            // insert vote totals per item
+            data: timesClickedDataArray,
+            backgroundColor: repeatColors,
+        },
+        {
+          label: '# of Views',
+          data: viewsDataArray,
+
+          type: 'line'
+        }],
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Product Clicks & Times Viewed'
+      },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    precision: 0,
+                }
+            }]
+        }
+    }
+  });
+};
