@@ -95,7 +95,7 @@ function clickOnProductEvent(event) {
   
   generateDisplayProduct();
 
-  if(totalPageClicks === 3){
+  if(totalPageClicks === 25){
     productHTMLList.removeEventListener('click', clickOnProductEvent);
     displayResultsToHTML();
     makeChart();
