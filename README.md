@@ -9,3 +9,4 @@ The assignment has a client wanting to make Bus Mall shopping catalogues but wan
 - To remind myself how to add on bullet points to `li` elements when using a reset CSS file, I used the property and value set fround at [w3schools](https://www.w3schools.com/css/css_list.asp)
 - For the chart we're using documentation from [chartjs](https://www.chartjs.org/docs/latest/)
 - To figure out how to repeat the color array for my graph for all products, I used this [StackOverflow Page](https://stackoverflow.com/questions/59691890/chart-js-repeating-colors)
+- Used this [StackOverlow Answer](https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript) to prevent my hmtl result list from duplicating after refresh
