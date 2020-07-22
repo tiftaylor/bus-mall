@@ -1,40 +1,68 @@
-body {
+/* the body container */
+#flexConZ {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  background-color: seashell;
+}
+/* the header */
+#flexItemA {
+  margin-bottom: 70px;
+  width: auto;
+  text-align: center;
+  
+}
+
+/* the main container */
+#flexConB {
+  display: flex;
+}
+/* the results list */
+#flexItemD {
+  min-width: 300px;
+  order: 1;
+  flex: 1;
+}
+
+/* the images and text container */
+#flexItemE {
+  margin-left: 40px;
+  margin-right: 40px;
+  order: 2;
+  flex: 3 1 auto;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#flexItemF {
+  width: 100%;
+}
+
+#flexItemF > ul {
   display: flex;
   justify-content: space-around;
-  flex-direction: column;
 }
 
-#chartDiv {
-  width: 600px;
-  outline: solid 3px orange;
+/* the lorem ipsum */
+#flexItemG {
+  padding: 30px;
 }
 
-#ulDiv {
-  outline: solid 3px orange;
-}
 
-h1 {
-  font-weight: bold;
-  font-size: 3rem;
-  margin: 30px;
+/* regular stuff */
+#chart {
+  order: 3;
+  width: 400px;
+  flex: 1;
 }
 
 img {
-  width: 300px;
-  height: 300px;
-  float: left;
-  padding: 20px;
+  width: 250px;
 }
 
-
-#productUL {
-  outline: solid 1px green;
-  height: 400px;
-}
-
-#resultUL {
-  clear: both;
-  list-style-type: circle;
-  margin: 50px;
-  outline: solid 1px purple;
+h1 {
+  font-size: 5rem;
 }
