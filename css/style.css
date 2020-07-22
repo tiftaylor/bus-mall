@@ -1,66 +1,68 @@
-.flexContainer {
+/* the body container */
+#flexConZ {
+  padding: 30px;
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  background-color: seashell;
+}
+/* the header */
+#flexItemA {
+  margin-bottom: 70px;
+  width: auto;
+  text-align: center;
+  
 }
 
-.flexDiv { 
-  outline: solid 2px orange;
-  padding: 20px;
+/* the main container */
+#flexConB {
+  display: flex;
+}
+/* the results list */
+#flexItemD {
+  min-width: 300px;
+  order: 1;
   flex: 1;
 }
 
-.item1 {
-  min-height: 60px;
-  align-self: auto;
-
+/* the images and text container */
+#flexItemE {
+  margin-left: 40px;
+  margin-right: 40px;
+  order: 2;
+  flex: 3 1 auto;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.item2 {
-  min-height: 300px;
-
+#flexItemF {
+  width: 100%;
 }
 
-.item3 {
+#flexItemF > ul {
+  display: flex;
+  justify-content: space-around;
+}
 
+/* the lorem ipsum */
+#flexItemG {
+  padding: 30px;
+}
+
+
+/* regular stuff */
+#chart {
+  order: 3;
+  width: 400px;
+  flex: 1;
 }
 
 img {
-  width: 300px;
-  height: 300px;
-}
-
-
-/* #chartDiv {
-  width: 600px;
-  outline: solid 3px orange;
-}
-
-#ulDiv {
-  outline: solid 3px orange;
+  width: 250px;
 }
 
 h1 {
-  font-weight: bold;
-  font-size: 3rem;
-  margin: 30px;
+  font-size: 5rem;
 }
-
-img {
-  width: 300px;
-  height: 300px;
-  float: left;
-  padding: 20px;
-}
-
-
-#productUL {
-  outline: solid 1px green;
-  height: 400px;
-}
-
-#resultUL {
-  clear: both;
-  list-style-type: circle;
-  margin: 50px;
-  outline: solid 1px purple;
-} */
