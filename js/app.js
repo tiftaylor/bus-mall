@@ -33,7 +33,7 @@ function Product(productName, src) {
 
   // evaluate if can use item
   var postToPageArray = [];
-  console.log(productIndexsCurrentlyOnPage);
+
   for(var k = 0; k < Product.productArray.length; k++){
     if (Product.productArray[k] !== productIndexsCurrentlyOnPage[0] && 
       Product.productArray[k] !== productIndexsCurrentlyOnPage[1] && 
@@ -79,6 +79,7 @@ Product.prototype.renderProductAsHTML = function() {
 productHTMLList.addEventListener('click', clickOnProductEvent);
 
 
+
 // ======= Click Event Handler ======= //
 function clickOnProductEvent(event) {
   console.log(event.target);
@@ -95,17 +96,26 @@ function clickOnProductEvent(event) {
   
   generateDisplayProduct();
 
-  if(totalPageClicks === 25){
+  // let the user select something 25 times then stop
+  if(totalPageClicks === 5){
     productHTMLList.removeEventListener('click', clickOnProductEvent);
     displayResultsToHTML();
     makeChart();
   }
+
+  // convert data to string to local storage
+  var stringyArr = JSON.stringify(Product.productArray);
+  localStorage.setItem('products', stringyArr);
+  
 };
 
 
 // ======= Display & Add Full Product.productArray to HTML resultsUL ====== //
 function displayResultsToHTML () {
   var resultUL = document.getElementById('resultUL');
+
+  // this is here so if you play the game again after a refresh the list doesn't duplicate
+  resultUL.innerHTML = '';
 
   for (var i = 0; i < Product.productArray.length; i++) {
     var resultLI = document.createElement('li');
@@ -116,31 +126,6 @@ function displayResultsToHTML () {
       resultUL.appendChild(resultLI);
   }
 };
- 
-
-// ======== TEST DATA ===== //
-new Product('Star Wars Luggage', 'img/bag.jpg');
-new Product('Banana Slicer', 'img/banana.jpg');
-new Product('Toiletainment', 'img/bathroom.jpg');
-new Product('Pointless Boots', 'img/boots.jpg');
-new Product('Breakfast All-in-One', 'img/breakfast.jpg');
-new Product('Meatball Bubble Gum', 'img/bubblegum.jpg');
-new Product('Dumb Chair', 'img/chair.jpg');
-new Product('Green Monster', 'img/cthulhu.jpg');
-new Product('Abused Dog', 'img/dog-duck.jpg');
-new Product('Dragon Meat', 'img/dragon.jpg');
-new Product('Pen', 'img/pen.jpg');
-new Product('Pet Sweeper Slippers', 'img/pet-sweep.jpg');
-new Product('Pizza Scissors', 'img/scissors.jpg');
-new Product('Sleeping Bag #1', 'img/shark.jpg');
-new Product('Baby Sweeper', 'img/sweep.png');
-new Product('Sleeping Bag #2', 'img/tauntaun.jpg');
-new Product('Unicorn Meat', 'img/unicorn.jpg');
-new Product('Weird USB', 'img/usb.gif');
-new Product('Bad Watering Can', 'img/water-can.jpg');
-new Product('Sad Wine Glass', 'img/wine-glass.jpg');
-
-generateDisplayProduct();
 
 
 // =============== CHART JS Code ================= //
@@ -204,3 +189,42 @@ function makeChart() {
     }
   });
 };
+
+
+// convert back to object for use
+var productsFromLocalStorage = localStorage.getItem('products');
+var parsedProducts = JSON.parse(productsFromLocalStorage);
+
+if(parsedProducts !== null){
+  for(var i = 0; i < parsedProducts.length; i++){
+    var reconstitutedProduct = new Product(parsedProducts[i].productName, parsedProducts[i].imgSource);
+    reconstitutedProduct.numClicksOfProduct = parsedProducts[i].numClicksOfProduct;
+    reconstitutedProduct.numTimesShown = parsedProducts[i].numTimesShown;
+  }
+  displayResultsToHTML();
+  makeChart();
+} else {
+  // ======== TEST DATA ===== //
+  new Product('Star Wars Luggage', 'img/bag.jpg');
+  new Product('Banana Slicer', 'img/banana.jpg');
+  new Product('Toiletainment', 'img/bathroom.jpg');
+  new Product('Pointless Boots', 'img/boots.jpg');
+  new Product('Breakfast All-in-One', 'img/breakfast.jpg');
+  new Product('Meatball Bubble Gum', 'img/bubblegum.jpg');
+  new Product('Dumb Chair', 'img/chair.jpg');
+  new Product('Green Monster', 'img/cthulhu.jpg');
+  new Product('Abused Dog', 'img/dog-duck.jpg');
+  new Product('Dragon Meat', 'img/dragon.jpg');
+  new Product('Pen', 'img/pen.jpg');
+  new Product('Pet Sweeper Slippers', 'img/pet-sweep.jpg');
+  new Product('Pizza Scissors', 'img/scissors.jpg');
+  new Product('Sleeping Bag #1', 'img/shark.jpg');
+  new Product('Baby Sweeper', 'img/sweep.png');
+  new Product('Sleeping Bag #2', 'img/tauntaun.jpg');
+  new Product('Unicorn Meat', 'img/unicorn.jpg');
+  new Product('Weird USB', 'img/usb.gif');
+  new Product('Bad Watering Can', 'img/water-can.jpg');
+  new Product('Sad Wine Glass', 'img/wine-glass.jpg');
+}
+
+generateDisplayProduct();
