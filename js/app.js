@@ -79,7 +79,6 @@ Product.prototype.renderProductAsHTML = function() {
 productHTMLList.addEventListener('click', clickOnProductEvent);
 
 
-
 // ======= Click Event Handler ======= //
 function clickOnProductEvent(event) {
   console.log(event.target);
@@ -97,7 +96,7 @@ function clickOnProductEvent(event) {
   generateDisplayProduct();
 
   // let the user select something 25 times then stop
-  if(totalPageClicks === 5){
+  if(totalPageClicks === 25){
     productHTMLList.removeEventListener('click', clickOnProductEvent);
     displayResultsToHTML();
     makeChart();
