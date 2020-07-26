@@ -81,19 +81,16 @@ productHTMLList.addEventListener('click', clickOnProductEvent);
 
 // ======= Click Event Handler ======= //
 function clickOnProductEvent(event) {
-  console.log(event.target);
   if (event.target.tagName === 'IMG') {
     totalPageClicks++;
 
     for (var prodIndex = 0; prodIndex < Product.productArray.length; prodIndex++){
       if (Product.productArray[prodIndex].imgSource === event.target.getAttribute('src')) {
         Product.productArray[prodIndex].numClicksOfProduct++;
-        console.log('numclicks: ', Product.productArray[prodIndex].numClicksOfProduct);
       }
     }
+    generateDisplayProduct();
   };
-  
-  generateDisplayProduct();
 
   // let the user select something 25 times then stop
   if(totalPageClicks === 25){
@@ -105,7 +102,6 @@ function clickOnProductEvent(event) {
   // convert data to string to local storage
   var stringyArr = JSON.stringify(Product.productArray);
   localStorage.setItem('products', stringyArr);
-  
 };
 
 
@@ -119,9 +115,9 @@ function displayResultsToHTML () {
   for (var i = 0; i < Product.productArray.length; i++) {
     var resultLI = document.createElement('li');
     resultLI.innerHTML = 
-      Product.productArray[i].productName + ' had ' 
-      + Product.productArray[i].numClicksOfProduct + ' vote(s) and was shown '
-      +  Product.productArray[i].numTimesShown + ' times'
+      '<strong>' + Product.productArray[i].productName + ': </strong>' 
+      + Product.productArray[i].numClicksOfProduct + ' vote(s) and '
+      +  Product.productArray[i].numTimesShown + ' views'
       resultUL.appendChild(resultLI);
   }
 };
@@ -130,7 +126,6 @@ function displayResultsToHTML () {
 // =============== CHART JS Code ================= //
 
 function makeChart() {
-
   // product Name label array
   var productLabelArray = [];
   for (var i = 0; i < Product.productArray.length; i++) {
@@ -143,12 +138,14 @@ function makeChart() {
     timesClickedDataArray.push(Product.productArray[i].numClicksOfProduct);
   }
   
+  // color array to circle through and apply to all images
   var colors = ['rgba(255, 99, 132, 0.8)', 'rgba(54, 162, 235, 0.8)', 'rgba(255, 206, 86, 0.8)', 'rgba(75, 192, 192, 0.8)', 'rgba(153, 102, 255, 0.8)', 'rgba(255, 159, 64, 0.8)'];
   var repeatColors = [];
   for (var i = 0; i < timesClickedDataArray.length; i++){
     repeatColors.push(colors[i % colors.length]);
   }
 
+  // data arary for # of views
   var viewsDataArray = [];
   for (var i = 0; i < Product.productArray.length; i++) {
     viewsDataArray.push(Product.productArray[i].numTimesShown);
@@ -190,7 +187,7 @@ function makeChart() {
 };
 
 
-// convert back to object for use
+// ======= convert data back to object for use ======== //
 var productsFromLocalStorage = localStorage.getItem('products');
 var parsedProducts = JSON.parse(productsFromLocalStorage);
 
